@@ -9,7 +9,7 @@ var Wizard = {
 var COUNT = 4;
 
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
+
 
 var similarListElement = userDialog.querySelector('.setup-similar-list');
 
