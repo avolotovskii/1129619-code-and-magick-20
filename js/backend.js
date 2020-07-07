@@ -73,6 +73,6 @@
 
   window.backend = {
     load: load,
-    save: upload
+    upload: upload
   };
 })();

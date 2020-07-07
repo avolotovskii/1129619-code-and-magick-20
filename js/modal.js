@@ -92,12 +92,10 @@
     changeColor(Color.COAT, coatColor, coatInput);
   });
 
-  // меняем цвет глаз персонажа
   wizardEyes.addEventListener('click', function () {
     changeColor(Color.EYES, wizardEyes, eyesInput);
   });
 
-  // меняем цвет фаербола
   fireball.addEventListener('click', function () {
     var newColor = getColor(Color.FIREBALL);
     fireball.style.backgroundColor = newColor;
@@ -113,7 +111,7 @@
   var errorHandler = window.error.errorHandler;
 
   setup.addEventListener('submit', function (evtBut) {
-    window.backend.save(new FormData(setupForm), successHandler, errorHandler);
+    window.backend.upload(new FormData(setupForm), successHandler, errorHandler);
     evtBut.preventDefault();
     setupSubmitButton.textContent = 'Данные отправляются...';
     setupSubmitButton.disabled = true;
