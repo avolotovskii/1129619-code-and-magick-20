@@ -24,6 +24,8 @@
   var eyesInput = setupPlayer.querySelector('input[name="eyes-color"]');
   var fireball = setupPlayer.querySelector('.setup-fireball-wrap');
   var fireballInput = setupPlayer.querySelector('input[name="fireball-color"]');
+  var setupSubmitButton = setup.querySelector('.setup-submit');
+  var setupForm = setup.querySelector('.setup-wizard-form');
 
   var escClousePopupHandler = function (evt) {
     if (evt.key === ESC_KEY) {
@@ -100,6 +102,21 @@
     var newColor = getColor(Color.FIREBALL);
     fireball.style.backgroundColor = newColor;
     fireballInput.value = newColor;
+  });
+
+  var successHandler = function () {
+    setup.classList.add('hidden');
+    setupSubmitButton.textContent = 'Сохранить';
+    setupSubmitButton.disabled = false;
+  };
+
+  var errorHandler = window.error.errorHandler;
+
+  setup.addEventListener('submit', function (evtBut) {
+    window.backend.save(new FormData(setupForm), successHandler, errorHandler);
+    evtBut.preventDefault();
+    setupSubmitButton.textContent = 'Данные отправляются...';
+    setupSubmitButton.disabled = true;
   });
 
   window.modal = {

@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var Wizard = window.mock.Wizard;
   var COUNT = 4;
   var userDialog = document.querySelector('.setup');
 
@@ -12,45 +11,33 @@
     .content
     .querySelector('.setup-similar-item');
 
-  var getRandomElement = function (items) {
-    return Math.floor(Math.random() * (items.length));
-  };
-
-  var wizardAdd = function (quantity) {
-    var wizards = [];
-    for (var i = 0; i < quantity; i++) {
-      wizards.push({
-        name: Wizard.NAMES[getRandomElement(Wizard.NAMES)] + ' ' + Wizard.SURNAMES[getRandomElement(Wizard.SURNAMES)],
-        coatColor: Wizard.COAT_COLORS[getRandomElement(Wizard.COAT_COLORS)],
-        eyesColor: Wizard.EYES_COLORS[getRandomElement(Wizard.EYES_COLORS)]
-      });
-    }
-    return wizards;
-  };
-
-  var wizards = wizardAdd(COUNT);
-
   var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
 
     return wizardElement;
   };
 
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < wizards.length; i++) {
-    fragment.appendChild(renderWizard(wizards[i]));
-  }
-  similarListElement.appendChild(fragment);
+  var succesHandler = function (wizards) {
+    var fragment = document.createDocumentFragment();
 
-  userDialog.querySelector('.setup-similar').classList.remove('hidden');
+    for (var i = 0; i < COUNT; i++) {
+      fragment.appendChild(renderWizard(wizards[i]));
+    }
+
+    similarListElement.appendChild(fragment);
+
+    userDialog.querySelector('.setup-similar').classList.remove('hidden');
+  };
+
+  var errorHandler = window.error.errorHandler;
+
+  window.backend.load(succesHandler, errorHandler);
 
   window.setup = {
     userDialog: userDialog
   };
-
 })();
-
